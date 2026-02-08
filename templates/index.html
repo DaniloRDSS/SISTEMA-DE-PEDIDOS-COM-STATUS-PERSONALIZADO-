@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Pedidos com Status Personalizado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>Sistema de Pedidos</h1>
+    <p><a href="/cliente">Acesse como Cliente (Ver Status do Pedido)</a></p>
+    <!-- Cadastro de Cliente -->
+    <section>
+        <h2>Cadastrar Cliente</h2>
+        <form id="form-cliente">
+            <input type="text" name="nome" placeholder="Nome" required>
+            <input type="text" name="telefone" placeholder="Telefone" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p id="msg-cliente"></p>
+    </section>
+
+    <!-- Cadastro de Pedido -->
+    <section>
+        <h2>Cadastrar Pedido</h2>
+        <form id="form-pedido">
+            <input type="text" name="cliente_id" placeholder="ID do Cliente" required>
+            <select name="tipo_negocio" required>
+                <option value="Delivery">Delivery</option>
+                <!-- Adicione mais opções aqui -->
+            </select>
+            <div id="itens-container">
+                <div class="item">
+                    <input type="text" name="itens[]" placeholder="Nome do Item" required>
+                    <input type="number" name="quantidades[]" placeholder="Quantidade" required>
+                    <input type="number" step="0.01" name="valores[]" placeholder="Valor Unitário" required>
+                </div>
+            </div>
+            <button type="button" onclick="adicionarItem()">Adicionar Item</button>
+            <button type="submit">Cadastrar Pedido</button>
+        </form>
+        <p id="msg-pedido"></p>
+    </section>
+
+    <!-- Atualizar Status (Atendente) -->
+    <section>
+        <h2>Atualizar Status do Pedido</h2>
+        <form id="form-status">
+            <input type="text" name="pedido_id" placeholder="ID do Pedido" required>
+            <select name="novo_status" required>
+                <option value="Pedido Recebido">Pedido Recebido</option>
+                <option value="Em Preparo">Em Preparo</option>
+                <option value="Saiu para Entrega">Saiu para Entrega</option>
+                <option value="Entregue">Entregue</option>
+            </select>
+            <button type="submit">Atualizar</button>
+        </form>
+        <p id="msg-status"></p>
+    </section>
+
+    <!-- Consulta de Status (Cliente) -->
+    <section>
+        <h2>Consultar Status do Pedido</h2>
+        <input type="text" id="consulta-pedido-id" placeholder="ID do Pedido">
+        <button onclick="consultarStatus()">Consultar</button>
+        <p id="status-pedido"></p>
+    </section>
+    <!-- ... (código existente acima) -->
+
+    <!-- Listagem de Pedidos -->
+    <section>
+        <h2>Listagem de Pedidos</h2>
+        <button onclick="listarPedidos()">Atualizar Lista</button>
+        <div id="lista-pedidos"></div>
+    </section>
+
+    <!-- Nova seção: Listagem de Clientes -->
+    <section>
+        <h2>Listagem de Clientes</h2>
+        <button onclick="listarClientes()">Carregar Clientes</button>
+        <div id="lista-clientes"></div>
+    </section>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

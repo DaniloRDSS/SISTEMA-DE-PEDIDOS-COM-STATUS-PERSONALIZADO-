@@ -1,0 +1,183 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo geral com fundo temático */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #FFF8E1 0%, #FFFFFF 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="5" fill="%23FFC107" opacity="0.1"/><circle cx="20" cy="20" r="3" fill="%23D32F2F" opacity="0.1"/><circle cx="80" cy="80" r="4" fill="%23FFC107" opacity="0.1"/></svg>') repeat;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Cabeçalho com logotipo */
+header {
+    background: #D32F2F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+.logo {
+    font-size: 3em;
+    color: #FFC107;
+    margin-bottom: 10px;
+} /* Placeholder para logotipo (ex.: 🍔 ou imagem) */
+
+/* Navegação */
+nav {
+    background: #FFC107;
+    padding: 10px;
+    text-align: center;
+}
+nav a {
+    color: #D32F2F;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+nav a:hover {
+    color: white;
+}
+
+/* Seções principais */
+section {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+section h2 {
+    color: #D32F2F;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #FFC107;
+    padding-bottom: 5px;
+}
+
+/* Formulários e inputs */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+input, select, button {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+input:focus, select:focus {
+    border-color: #D32F2F;
+    outline: none;
+}
+button {
+    background: #D32F2F;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+button:hover {
+    background: #B71C1C;
+    transform: scale(1.05);
+}
+
+/* Itens dinâmicos */
+.item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.item input {
+    flex: 1;
+}
+
+/* Listas e cards */
+ul {
+    list-style: none;
+}
+li {
+    background: #FFF8E1;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border-left: 5px solid #FFC107;
+}
+.card {
+    background: #FFF8E1;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card h3 {
+    color: #D32F2F;
+}
+
+/* Barra de progresso para status (cliente.html) */
+.progress-bar {
+    width: 100%;
+    background: #ddd;
+    border-radius: 10px;
+    height: 20px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #FFC107, #D32F2F);
+    transition: width 0.5s;
+}
+
+/* Mensagens */
+p[id*="msg"], p[id*="erro"] {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+p[id*="msg"] {
+    background: #E8F5E8;
+    color: #2E7D32;
+}
+p[id*="erro"] {
+    background: #FFEBEE;
+    color: #C62828;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+    section {
+        margin: 10px;
+        padding: 15px;
+    }
+    .item {
+        flex-direction: column;
+    }
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+}

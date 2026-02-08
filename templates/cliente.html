@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastDelivery - Status do Pedido</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">🍔 FastDelivery</div>
+        <h1>Status do Meu Pedido</h1>
+        <p>Acompanhe seu pedido em tempo real!</p>
+    </header>
+    
+    <!-- Novo link de retorno -->
+    <p><a href="/">Voltar ao Painel Atendente</a></p>
+    
+    <nav>
+        <a href="/">Voltar ao Painel</a>
+    </nav>
+    
+    <!-- Formulário para consultar pedido -->
+    <section>
+        <h2>🔍 Consultar Pedido</h2>
+        <input type="text" id="pedido-id" placeholder="Digite o ID do Pedido" required>
+        <button onclick="consultarPedido()">Ver Pedido</button>
+    </section>
+    
+    <!-- Área para exibir detalhes do pedido -->
+    <section id="detalhes-pedido" style="display: none;">
+        <h2>📦 Detalhes do Pedido</h2>
+        <div class="card">
+            <div>
+                <p><strong>ID do Pedido:</strong> <span id="id-pedido"></span></p>
+                <p><strong>Itens:</strong></p>
+                <ul id="itens-pedido"></ul>
+                <p><strong>Valor Total:</strong> R$ <span id="valor-total"></span></p>
+            </div>
+            <div>
+                <p><strong>Status Atual:</strong> <span id="status-atual"></span></p>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <p><strong>Histórico de Status:</strong></p>
+                <ul id="historico-status"></ul>
+            </div>
+        </div>
+    </section>
+    
+    <p id="erro-mensagem" style="color: red; display: none;"></p>
+    
+    <script>
+        // Função para consultar e exibir pedido
+        function consultarPedido() {
+            const pedidoId = document.getElementById('pedido-id').value;
+            if (!pedidoId) {
+                alert('Por favor, insira o ID do pedido.');
+                return;
+            }
+            
+            fetch(`/consultar_status/${pedidoId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('erro-mensagem').textContent = data.error;
+                        document.getElementById('erro-mensagem').style.display = 'block';
+                        document.getElementById('detalhes-pedido').style.display = 'none';
+                    } else {
+                        // Exibir detalhes
+                        document.getElementById('id-pedido').textContent = pedidoId;
+                        document.getElementById('status-atual').textContent = data.status;
+                        document.getElementById('valor-total').textContent = 'Calculando...';  // Placeholder
+                        
+                        // Itens
+                        const itensUl = document.getElementById('itens-pedido');
+                        itensUl.innerHTML = '<li>Dados de itens não disponíveis. Use o ID para detalhes completos.</li>';
+                        
+                        // Histórico
+                        const historicoUl = document.getElementById('historico-status');
+                        historicoUl.innerHTML = data.historico.map(h => `<li>${h.status} - ${h.timestamp}</li>`).join('');
+                        
+                        // Barra de progresso baseada no status
+                        const statusOrder = ['Pedido Recebido', 'Em Preparo', 'Saiu para Entrega', 'Entregue'];
+                        const progress = ((statusOrder.indexOf(data.status) + 1) / statusOrder.length) * 100;
+                        document.getElementById('progress-fill').style.width = progress + '%';
+                        
+                        document.getElementById('detalhes-pedido').style.display = 'block';
+                        document.getElementById('erro-mensagem').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('erro-mensagem').textContent = 'Erro ao consultar pedido.';
+                    document.getElementById('erro-mensagem').style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>
